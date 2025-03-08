@@ -15,7 +15,7 @@ authMiddleWare.protect = catchErrors(async (req, res, next) => {
   jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) return next(new AppError("invalid token", 401)); //!important
     if (decoded.userStatus === "suspended")
-      next(new AppError("Your account is suspended", 403));
+      return next(new AppError("Your account is suspended", 403));
     req.user = decoded;
     next();
   });
